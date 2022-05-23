@@ -10,4 +10,5 @@ public class ParticipantDTO {
     private String email;
     private String Photo;
     private ParticipantGenre genre;
+    private String type;
 }

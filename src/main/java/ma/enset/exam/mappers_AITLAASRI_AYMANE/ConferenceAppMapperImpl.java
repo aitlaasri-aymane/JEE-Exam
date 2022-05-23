@@ -20,6 +20,7 @@ public class ConferenceAppMapperImpl {
     public ParticipantDTO fromParticipant(Participant participant){
         ParticipantDTO participantDTO = new ParticipantDTO();
         BeanUtils.copyProperties(participant,participantDTO);
+        participantDTO.setType(participant.getClass().getSimpleName());
         return participantDTO;
     }
     public Participant fromParticipantDTO(ParticipantDTO participantDTO){
@@ -30,6 +31,7 @@ public class ConferenceAppMapperImpl {
     public ModerateurDTO fromModerateur(Moderateur moderateur){
         ModerateurDTO moderateurDTO = new ModerateurDTO();
         BeanUtils.copyProperties(moderateur,moderateurDTO);
+        moderateurDTO.setType(moderateur.getClass().getSimpleName());
         return moderateurDTO;
     }
     public Moderateur fromModerateurDTO(ModerateurDTO moderateurDTO){
@@ -40,6 +42,7 @@ public class ConferenceAppMapperImpl {
     public InviteDTO fromInvite(Invite invite){
         InviteDTO inviteDTO = new InviteDTO();
         BeanUtils.copyProperties(invite,inviteDTO);
+        inviteDTO.setType(invite.getClass().getSimpleName());
         return inviteDTO;
     }
     public Invite fromInviteDTO(InviteDTO inviteDTO){
@@ -50,6 +53,7 @@ public class ConferenceAppMapperImpl {
     public SpeakerDTO fromSpeaker(Speaker speaker){
         SpeakerDTO speakerDTO = new SpeakerDTO();
         BeanUtils.copyProperties(speaker,speakerDTO);
+        speakerDTO.setType(speaker.getClass().getSimpleName());
         return speakerDTO;
     }
     public Speaker fromSpeakerDTO(SpeakerDTO speakerDTO){
@@ -66,5 +70,35 @@ public class ConferenceAppMapperImpl {
         Commentaire commentaire = new Commentaire();
         BeanUtils.copyProperties(commentaireDTO,commentaire);
         return commentaire;
+    }
+    public InscriptionDTO fromInscription(Inscription inscription){
+        InscriptionDTO inscriptionDTO = new InscriptionDTO();
+        BeanUtils.copyProperties(inscription,inscriptionDTO);
+        return inscriptionDTO;
+    }
+    public Inscription fromInscriptionDTO(InscriptionDTO inscriptionDTO){
+        Inscription inscription = new Inscription();
+        BeanUtils.copyProperties(inscriptionDTO,inscription);
+        return inscription;
+    }
+    public SalleDTO fromSalle(Salle salle){
+        SalleDTO salleDTO = new SalleDTO();
+        BeanUtils.copyProperties(salle,salleDTO);
+        return salleDTO;
+    }
+    public Salle fromSalleDTO(SalleDTO salleDTO){
+        Salle salle = new Salle();
+        BeanUtils.copyProperties(salleDTO,salle);
+        return salle;
+    }
+    public SessionDTO fromSession(Session session){
+        SessionDTO sessionDTO = new SessionDTO();
+        BeanUtils.copyProperties(session,sessionDTO);
+        return sessionDTO;
+    }
+    public Session fromSessionDTO(SessionDTO sessionDTO){
+        Session salle = new Session();
+        BeanUtils.copyProperties(sessionDTO,salle);
+        return salle;
     }
 }

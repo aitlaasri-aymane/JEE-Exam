@@ -21,7 +21,7 @@ public class ExamApplication {
     }
 
     @Bean
-    CommandLineRunner start(IConferenceAppService conferenceAppService){
+    CommandLineRunner AddParticipants(IConferenceAppService conferenceAppService){
         return args -> {
             Stream.of("Aymane","Imad","Khalid").forEach(name->{
                 ParticipantDTO participantDTO = new ParticipantDTO();
@@ -59,9 +59,27 @@ public class ExamApplication {
                 conferenceAppService.saveInvite(inviteDTO);
             });
             System.out.println(conferenceAppService.getParticipantID(1L));
-            System.out.println(conferenceAppService.getParticipantID(8L));
-            System.out.println(conferenceAppService.getParticipantID(12L));
-            System.out.println(conferenceAppService.getParticipantID(15L));
+            System.out.println(conferenceAppService.getParticipantID(4L));
+            System.out.println(conferenceAppService.getParticipantID(7L));
+            System.out.println(conferenceAppService.getParticipantID(10L));
+        };
+    }
+
+    @Bean
+    CommandLineRunner AddSalle(IConferenceAppService conferenceAppService){
+        return args -> {
+            for (int i=1;i<=3;i++){
+                conferenceAppService.saveSalle("Salle"+i);
+            }
+        };
+    }
+
+    @Bean
+    CommandLineRunner AddSessions(IConferenceAppService conferenceAppService){
+        return args -> {
+            for (int i=1;i<=3;i++){
+                conferenceAppService.saveSession("Session"+i, conferenceAppService.getSalleID(i+0L) ,conferenceAppService.getModeratorID(i+6L));
+            }
         };
     }
 
