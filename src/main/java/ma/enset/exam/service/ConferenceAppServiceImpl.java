@@ -6,7 +6,9 @@ import ma.enset.exam.dtos.ModerateurDTO;
 import ma.enset.exam.dtos.ParticipantDTO;
 import ma.enset.exam.dtos.SpeakerDTO;
 import ma.enset.exam.entities.Invite;
+import ma.enset.exam.entities.Moderateur;
 import ma.enset.exam.entities.Participant;
+import ma.enset.exam.entities.Speaker;
 import ma.enset.exam.mappers.ConferenceAppMapperImpl;
 import ma.enset.exam.repositories.*;
 import org.springframework.stereotype.Service;
@@ -36,16 +38,22 @@ public class ConferenceAppServiceImpl implements IConferenceAppService {
 
     @Override
     public ModerateurDTO saveModerateur(ModerateurDTO moderateurDTO) {
-        return null;
+        Moderateur moderateur = conferenceAppMapper.fromModerateurDTO(moderateurDTO);
+        Moderateur savedModerateur = moderateurRepository.save(moderateur);
+        return conferenceAppMapper.fromModerateur(savedModerateur);
     }
 
     @Override
     public InviteDTO saveInvite(InviteDTO inviteDTO) {
-        return null;
+        Invite invite = conferenceAppMapper.fromInviteDTO(inviteDTO);
+        Invite savedInvite = inviteRepository.save(invite);
+        return conferenceAppMapper.fromInvite(savedInvite);
     }
 
     @Override
     public SpeakerDTO saveSpeaker(SpeakerDTO speakerDTO) {
-        return null;
+        Speaker speaker = conferenceAppMapper.fromSpeakerDTO(speakerDTO);
+        Speaker savedSpeaker = speakerRepository.save(speaker);
+        return conferenceAppMapper.fromSpeaker(savedSpeaker);
     }
 }
