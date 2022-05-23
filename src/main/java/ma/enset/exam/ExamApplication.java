@@ -83,4 +83,22 @@ public class ExamApplication {
         };
     }
 
+    @Bean
+    CommandLineRunner AddConferences(IConferenceAppService conferenceAppService){
+        return args -> {
+            for (int i=1;i<=3;i++){
+                conferenceAppService.saveConference("Conference"+i,"Description", conferenceAppService.getSessionID(i+0L) ,conferenceAppService.getSpeakerID(i+3L));
+            }
+        };
+    }
+
+    @Bean
+    CommandLineRunner AddInscriptions(IConferenceAppService conferenceAppService){
+        return args -> {
+            for (int i=1;i<=3;i++){
+                conferenceAppService.saveInscription(200, conferenceAppService.getSessionID(i+0L) ,conferenceAppService.getInviteID(i+9L));
+            }
+        };
+    }
+
 }

@@ -3,14 +3,14 @@ package ma.enset.exam.service_AITLAASRI_AYMANE;
 import lombok.AllArgsConstructor;
 import ma.enset.exam.dtos_AITLAASRI_AYMANE.*;
 import ma.enset.exam.entities_AITLAASRI_AYMANE.*;
-import ma.enset.exam.exceptions_AITLAASRI_AYMANE.ModeratorNotFoundException;
-import ma.enset.exam.exceptions_AITLAASRI_AYMANE.ParticipantNotFoundException;
-import ma.enset.exam.exceptions_AITLAASRI_AYMANE.SalleNotFoundException;
+import ma.enset.exam.exceptions_AITLAASRI_AYMANE.*;
 import ma.enset.exam.mappers_AITLAASRI_AYMANE.ConferenceAppMapperImpl;
 import ma.enset.exam.repositories_AITLAASRI_AYMANE.*;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class ConferenceAppServiceImpl implements IConferenceAppService {
     private ConferenceAppMapperImpl conferenceAppMapper;
     private CommentaireRepository commentaireRepository;
+    private InscriptionRepository inscriptionRepository;
     private ConferenceRepository conferenceRepository;
     private InviteRepository inviteRepository;
     private ModerateurRepository moderateurRepository;
@@ -77,6 +78,35 @@ public class ConferenceAppServiceImpl implements IConferenceAppService {
     }
 
     @Override
+    public ConferenceDTO saveConference(String titre, String description, SessionDTO sessionDTO, SpeakerDTO speakerDTO) {
+        Session session = conferenceAppMapper.fromSessionDTO(sessionDTO);
+        Speaker speaker = conferenceAppMapper.fromSpeakerDTO(speakerDTO);
+        Conference conference = new Conference();
+        conference.setTitre(titre);
+        conference.setDescription(description);
+        conference.setSession(session);
+        conference.setSpeaker(speaker);
+        conference.setDate(new Date());
+        conference.setHeureDeDebut(new Date());
+        conference.setHeureDeFin(new Date());
+        Conference savedConference = conferenceRepository.save(conference);
+        return conferenceAppMapper.fromConference(savedConference);
+    }
+
+    @Override
+    public InscriptionDTO saveInscription(double prix, SessionDTO sessionDTO, InviteDTO inviteDTO) {
+        Session session = conferenceAppMapper.fromSessionDTO(sessionDTO);
+        Invite invite = conferenceAppMapper.fromInviteDTO(inviteDTO);
+        Inscription inscription = new Inscription();
+        inscription.setPrix(prix);
+        inscription.setSession(session);
+        inscription.setInvite(invite);
+        inscription.setDate(new Date());
+        Inscription savedInscription = inscriptionRepository.save(inscription);
+        return conferenceAppMapper.fromInscription(savedInscription);
+    }
+
+    @Override
     public ParticipantDTO getParticipantID(Long id) throws ParticipantNotFoundException {
         Participant participant = participantRepository.findById(id).orElseThrow(()-> new ParticipantNotFoundException("Participant not found!"));
         ParticipantDTO participantDTO = conferenceAppMapper.fromParticipant(participant);
@@ -84,15 +114,36 @@ public class ConferenceAppServiceImpl implements IConferenceAppService {
     }
     @Override
     public ModerateurDTO getModeratorID(Long id) throws ModeratorNotFoundException {
-        Moderateur moderateur = moderateurRepository.findById(id).orElseThrow(()-> new ModeratorNotFoundException("Participant not found!"));
+        Moderateur moderateur = moderateurRepository.findById(id).orElseThrow(()-> new ModeratorNotFoundException("Moderateur not found!"));
         ModerateurDTO moderateurDTO = conferenceAppMapper.fromModerateur(moderateur);
         return moderateurDTO;
     }
     @Override
+    public SpeakerDTO getSpeakerID(Long id) throws SpeakerNotFoundException {
+        Speaker speaker = speakerRepository.findById(id).orElseThrow(()-> new SpeakerNotFoundException("Speaker not found!"));
+        SpeakerDTO speakerDTO = conferenceAppMapper.fromSpeaker(speaker);
+        return speakerDTO;
+    }
+
+    @Override
+    public InviteDTO getInviteID(Long id) throws InviteNotFoundException {
+        Invite invite = inviteRepository.findById(id).orElseThrow(()-> new InviteNotFoundException("Invite not found!"));
+        InviteDTO inviteDTO = conferenceAppMapper.fromInvite(invite);
+        return inviteDTO;
+    }
+
+    @Override
     public SalleDTO getSalleID(Long id) throws SalleNotFoundException {
-        Salle salle = salleRepository.findById(id).orElseThrow(()-> new SalleNotFoundException("Participant not found!"));
+        Salle salle = salleRepository.findById(id).orElseThrow(()-> new SalleNotFoundException("Salle not found!"));
         SalleDTO salleDTO = conferenceAppMapper.fromSalle(salle);
         return salleDTO;
+    }
+
+    @Override
+    public SessionDTO getSessionID(Long id) throws SessionNotFoundException {
+        Session session = sessionRepository.findById(id).orElseThrow(()-> new SessionNotFoundException("Session not found!"));
+        SessionDTO sessionDTO = conferenceAppMapper.fromSession(session);
+        return sessionDTO;
     }
 
     @Override
