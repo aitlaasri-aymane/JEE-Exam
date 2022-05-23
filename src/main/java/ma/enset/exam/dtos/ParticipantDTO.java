@@ -7,7 +7,7 @@ import ma.enset.exam.enums.ParticipantGenre;
 
 import javax.persistence.*;
 import java.util.List;
-
+@Data
 public class ParticipantDTO {
     private Long id;
     private String nom;

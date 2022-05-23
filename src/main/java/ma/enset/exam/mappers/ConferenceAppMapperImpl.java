@@ -3,7 +3,9 @@ package ma.enset.exam.mappers;
 import ma.enset.exam.dtos.*;
 import ma.enset.exam.entities.*;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ConferenceAppMapperImpl {
     public ConferenceDTO fromConference(Conference conference){
         ConferenceDTO conferenceDTO = new ConferenceDTO();
