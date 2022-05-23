@@ -9,11 +9,14 @@ import ma.enset.exam.entities.Invite;
 import ma.enset.exam.entities.Moderateur;
 import ma.enset.exam.entities.Participant;
 import ma.enset.exam.entities.Speaker;
+import ma.enset.exam.exceptions.ParticipantNotFoundException;
 import ma.enset.exam.mappers.ConferenceAppMapperImpl;
 import ma.enset.exam.repositories.*;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -55,5 +58,31 @@ public class ConferenceAppServiceImpl implements IConferenceAppService {
         Speaker speaker = conferenceAppMapper.fromSpeakerDTO(speakerDTO);
         Speaker savedSpeaker = speakerRepository.save(speaker);
         return conferenceAppMapper.fromSpeaker(savedSpeaker);
+    }
+
+    @Override
+    public ParticipantDTO getParticipantID(Long id) throws ParticipantNotFoundException {
+        Participant participant = participantRepository.findById(id).orElseThrow(()-> new ParticipantNotFoundException("Participant not found!"));
+        ParticipantDTO participantDTO = conferenceAppMapper.fromParticipant(participant);
+        return participantDTO;
+    }
+
+    @Override
+    public List<ParticipantDTO> listParticipants() {
+        List<Participant> participantList = participantRepository.findAll();
+        List<ParticipantDTO> participantDTOList = participantList.stream()
+                .map(participant -> {
+                    if (participant instanceof Speaker) {
+                        return conferenceAppMapper.fromSpeaker((Speaker) participant);
+                    } else if (participant instanceof Moderateur){
+                        return conferenceAppMapper.fromModerateur((Moderateur) participant);
+                    } else if (participant instanceof Invite){
+                        return conferenceAppMapper.fromInvite((Invite) participant);
+                    } else {
+                        return conferenceAppMapper.fromParticipant(participant);
+                    }
+                })
+                .collect(Collectors.toList());
+        return participantDTOList;
     }
 }

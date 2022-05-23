@@ -8,6 +8,7 @@ import ma.enset.exam.entities.Invite;
 import ma.enset.exam.entities.Moderateur;
 import ma.enset.exam.enums.ParticipantGenre;
 import ma.enset.exam.service.ConferenceAppServiceImpl;
+import ma.enset.exam.service.IConferenceAppService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,7 +24,7 @@ public class ExamApplication {
     }
 
     @Bean
-    CommandLineRunner start(ConferenceAppServiceImpl conferenceAppService){
+    CommandLineRunner start(IConferenceAppService conferenceAppService){
         return args -> {
             Stream.of("Aymane","Imad","Khalid").forEach(name->{
                 ParticipantDTO participantDTO = new ParticipantDTO();
@@ -60,6 +61,10 @@ public class ExamApplication {
                 inviteDTO.setAffiliation("ENSET");
                 conferenceAppService.saveInvite(inviteDTO);
             });
+            System.out.println(conferenceAppService.getParticipantID(1L));
+            System.out.println(conferenceAppService.getParticipantID(8L));
+            System.out.println(conferenceAppService.getParticipantID(12L));
+            System.out.println(conferenceAppService.getParticipantID(15L));
         };
     }
 
