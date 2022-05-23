@@ -21,4 +21,6 @@ public interface IConferenceAppService {
     SalleDTO getSalleID(Long id) throws SalleNotFoundException;
     SessionDTO getSessionID(Long id) throws SessionNotFoundException;
     List<ParticipantDTO> listParticipants();
+    List<SessionDTO> listSessions();
+    List<ConferenceDTO> listConferences();
 }

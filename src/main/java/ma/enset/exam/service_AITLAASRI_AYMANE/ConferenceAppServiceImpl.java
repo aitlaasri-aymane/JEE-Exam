@@ -164,4 +164,26 @@ public class ConferenceAppServiceImpl implements IConferenceAppService {
                 .collect(Collectors.toList());
         return participantDTOList;
     }
+
+    @Override
+    public List<SessionDTO> listSessions() {
+        List<Session> sessions = sessionRepository.findAll();
+        List<SessionDTO> sessionDTOS = sessions.stream()
+                .map(session -> {
+                    return conferenceAppMapper.fromSession(session);
+                })
+                .collect(Collectors.toList());
+        return sessionDTOS;
+    }
+
+    @Override
+    public List<ConferenceDTO> listConferences() {
+        List<Conference> conferenceList = conferenceRepository.findAll();
+        List<ConferenceDTO> conferenceDTOS = conferenceList.stream()
+                .map(conference -> {
+                    return conferenceAppMapper.fromConference(conference);
+                })
+                .collect(Collectors.toList());
+        return conferenceDTOS;
+    }
 }
