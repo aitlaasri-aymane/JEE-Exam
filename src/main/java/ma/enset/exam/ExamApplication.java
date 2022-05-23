@@ -1,14 +1,11 @@
 package ma.enset.exam;
 
-import ma.enset.exam.dtos.InviteDTO;
-import ma.enset.exam.dtos.ModerateurDTO;
-import ma.enset.exam.dtos.ParticipantDTO;
-import ma.enset.exam.dtos.SpeakerDTO;
-import ma.enset.exam.entities.Invite;
-import ma.enset.exam.entities.Moderateur;
-import ma.enset.exam.enums.ParticipantGenre;
-import ma.enset.exam.service.ConferenceAppServiceImpl;
-import ma.enset.exam.service.IConferenceAppService;
+import ma.enset.exam.dtos_AITLAASRI_AYMANE.InviteDTO;
+import ma.enset.exam.dtos_AITLAASRI_AYMANE.ModerateurDTO;
+import ma.enset.exam.dtos_AITLAASRI_AYMANE.ParticipantDTO;
+import ma.enset.exam.dtos_AITLAASRI_AYMANE.SpeakerDTO;
+import ma.enset.exam.enums_AITLAASRI_AYMANE.ParticipantGenre;
+import ma.enset.exam.service_AITLAASRI_AYMANE.IConferenceAppService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
